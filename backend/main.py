@@ -1,0 +1,13 @@
+from core.config import settings
+
+
+def main():
+    print("=" * 40)
+    print(f"Starting {settings.APP_NAME}")
+    print(f"Broker: {settings.BROKER}")
+    print(f"Mode: {settings.BOT_MODE}")
+    print("=" * 40)
+
+
+if __name__ == "__main__":
+    main()
