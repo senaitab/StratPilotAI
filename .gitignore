@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+backend/.venv/
+
+# Secrets
+.env
+.env.*
+
+# Webull tokens/logs
+backend/conf/token.txt
+*.log
+backend/webull_trade_sdk.log
+
+# macOS/editor
+.DS_Store
+.vscode/
+.idea/
