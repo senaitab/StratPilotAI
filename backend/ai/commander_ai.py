@@ -1,7 +1,7 @@
 from risk.risk_ai import RiskAI
 
 
-class PositionAI:
+class CommanderAI:
     def __init__(self):
         self.risk_ai = RiskAI()
 
