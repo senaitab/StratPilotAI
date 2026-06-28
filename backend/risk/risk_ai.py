@@ -1,13 +1,9 @@
-from broker.webull_client import WebullClient
+from broker.session import BrokerSession
 
 
 class RiskAI:
-    """
-    RiskAI protects the account before any trade is allowed.
-    """
-
     def __init__(self):
-        self.client = WebullClient()
+        self.client = BrokerSession.get_client()
 
     def analyze(self):
         balance = self.client.get_balance()
