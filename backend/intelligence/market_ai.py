@@ -19,22 +19,18 @@ class MarketAI:
             bias = "STRONG BULLISH"
             recommendation = "LOOK FOR CALLS"
             confidence = 90
-
         elif change_pct >= 0.30:
             bias = "BULLISH"
             recommendation = "CALLS FAVORABLE"
             confidence = 75
-
         elif change_pct <= -1.0:
             bias = "STRONG BEARISH"
             recommendation = "LOOK FOR PUTS"
             confidence = 90
-
         elif change_pct <= -0.30:
             bias = "BEARISH"
             recommendation = "PUTS FAVORABLE"
             confidence = 75
-
         else:
             bias = "NEUTRAL"
             recommendation = "WAIT"
@@ -66,3 +62,4 @@ if __name__ == "__main__":
     print(f"Recommendation : {report['recommendation']}")
     print(f"Confidence     : {report['confidence']}%")
     print("===================================")
+
