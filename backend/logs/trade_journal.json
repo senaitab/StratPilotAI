@@ -1,0 +1,26 @@
+[
+    {
+        "timestamp": "2026-06-28T14:17:08.079485",
+        "market": {
+            "bias": "NEUTRAL"
+        },
+        "risk": {
+            "decision": "NO TRADE"
+        },
+        "strategy": {
+            "recommendation": "WAIT"
+        },
+        "options": {
+            "decision": "WAIT"
+        },
+        "position": {
+            "contracts": 0
+        },
+        "commander": {
+            "decision": "TRADE REJECTED"
+        },
+        "execution": {
+            "status": "NOT READY"
+        }
+    }
+]
