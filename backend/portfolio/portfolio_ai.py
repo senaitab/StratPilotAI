@@ -5,8 +5,9 @@ class PortfolioAI:
     def __init__(self):
         self.risk_ai = RiskAI()
 
-    def analyze(self):
-        risk = self.risk_ai.analyze()
+    def analyze(self, risk=None):
+        if risk is None:
+            risk = self.risk_ai.analyze()
 
         account_size = float(risk["account_size"])
         max_risk = float(risk["max_risk"])
