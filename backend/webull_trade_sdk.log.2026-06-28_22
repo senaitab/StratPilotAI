@@ -1,0 +1,204 @@
+8583000320 2026-06-28 21:23:56,162 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:23:56,166 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:23:56,167 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,167 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,168 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:23:56,169 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,264 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,267 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,267 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,270 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:23:56,270 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,353 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:23:56,356 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:23:56,357 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,358 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,358 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:23:56,358 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,438 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,441 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,441 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,442 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:23:56,442 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,563 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:23:56,565 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:23:56,565 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,566 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,566 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:23:56,566 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,669 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,671 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,672 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,672 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:23:56,673 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,757 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:23:56,760 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:23:56,761 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,761 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,761 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:23:56,761 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,833 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,836 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,836 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,837 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:23:56,837 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:56,931 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:23:56,935 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:23:56,936 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,936 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:23:56,936 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:23:56,937 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:57,010 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:57,012 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:57,012 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:57,012 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:23:57,012 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:23:57,841 webull.core.client ERROR ServerException occurred. Host:api.webull.com SDK-Version:2.0.12 Request:{
+  "_version": "v2",
+  "_action_name": "/openapi/assets/balance",
+  "_protocol_type": "https",
+  "_accept_format": "JSON",
+  "_params": {
+    "account_id": "4LIO3T76M4327D20HQEGH1C0QA"
+  },
+  "_method": "GET",
+  "_header": {
+    "x-version": "v2",
+    "Accept-Encoding": "gzip",
+    "x-app-key": "980f327ee1f127e7a18f6f0cc05632a3",
+    "x-timestamp": "2026-06-29T01:23:57Z",
+    "x-signature-version": "1.0",
+    "x-signature-algorithm": "HMAC-SHA1",
+    "x-signature-nonce": "6ca487d0-50f8-572e-a115-47523182cb3b",
+    "x-signature": "aVv3+GI85nNgPOj7Ad0G0dLqfK8=",
+    "User-Agent": "WebullApiSDK (Darwin 25.3.0;arm64) Python/3.12.13 Core/2.0.12 python-requests/2.34.2",
+    "x-access-token": "cf15e10194c641c29515751da2f4a950",
+    "x-webull-client-source": "sdk"
+  },
+  "_body_params": null,
+  "_uri_pattern": null,
+  "_uri_params": null,
+  "_content": null,
+  "_extra_user_agent": {},
+  "string_to_sign": "",
+  "_request_connect_timeout": null,
+  "_request_read_timeout": null,
+  "endpoint": "api.webull.com",
+  "_signer_spec": "<module 'webull.core.auth.algorithm.sha_hmac1' from '/Users/senaitab/Developer/StratPilotAI/backend/.venv/lib/python3.12/site-packages/webull/core/auth/algorithm/sha_hmac1.py'>"
+} Response:{'error_code': 'TOO_MANY_REQUESTS', 'message': 'Too many requests'} ServerException:HTTP Status: 429, Code: TOO_MANY_REQUESTS, Msg: Too many requests, RequestID: 8c133914-8e5d-4c19-a4a4-6e0bd5116a30
+8583000320 2026-06-28 21:23:57,842 webull.core.client ERROR get_response exception. {
+  "error_code": "TOO_MANY_REQUESTS",
+  "error_msg": "Too many requests",
+  "http_status": 429,
+  "request_id": "8c133914-8e5d-4c19-a4a4-6e0bd5116a30"
+}
+8583000320 2026-06-28 21:47:04,135 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:47:04,136 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:47:04,136 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,136 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,136 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:47:04,136 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,216 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,217 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,217 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,217 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:47:04,217 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,283 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:47:04,283 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:47:04,284 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,284 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,284 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:47:04,284 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,353 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,355 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,355 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,356 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:47:04,356 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,426 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:47:04,428 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:47:04,429 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,429 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,430 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:47:04,430 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,497 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,498 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,499 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,499 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:47:04,499 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,571 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:47:04,574 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:47:04,574 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,574 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,574 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:47:04,575 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,646 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,648 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,649 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,650 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:47:04,650 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,718 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 21:47:04,719 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 21:47:04,720 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,720 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 21:47:04,720 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 21:47:04,720 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,785 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,787 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,787 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 21:47:04,788 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 21:47:04,789 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:51,318 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 22:11:51,321 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 22:11:51,322 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:51,323 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:51,323 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 22:11:51,323 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:51,669 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:51,671 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:51,672 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:51,673 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 22:11:51,673 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:51,880 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 22:11:51,883 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 22:11:51,884 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:51,884 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:51,884 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 22:11:51,884 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,215 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,216 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,217 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,217 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 22:11:52,217 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,480 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 22:11:52,482 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 22:11:52,483 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:52,483 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:52,483 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 22:11:52,484 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,693 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,695 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,695 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,696 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 22:11:52,696 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,887 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 22:11:52,889 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 22:11:52,890 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:52,890 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:52,890 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 22:11:52,890 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,951 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,953 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,954 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:52,954 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 22:11:52,954 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:53,022 webull.core.http.initializer.client_initializer INFO _check_token_enable result is True
+8583000320 2026-06-28 22:11:53,024 webull.core.http.initializer.token.token_storage INFO storage_token uses the default configuration, conf.
+8583000320 2026-06-28 22:11:53,024 webull.core.http.initializer.token.token_storage INFO storage_token initialized path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:53,024 webull.core.http.initializer.token.token_storage WARNING storage_token Note: The token file already exists, the latest token configuration will be overwritten and written to the token file after successful 2FA verification. path:/Users/senaitab/Developer/StratPilotAI/backend/conf/token.txt.
+8583000320 2026-06-28 22:11:53,024 webull.core.http.initializer.token.token_manager INFO load_token_from_local reading token from file...
+8583000320 2026-06-28 22:11:53,025 webull.core.http.initializer.token.token_manager INFO load_token_from_local read local token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:53,086 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token result. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:53,088 webull.core.http.initializer.token.token_manager INFO fetch_token_from_server create_token status is verified, no further check required, returning directly. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:53,088 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to local file. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL
+8583000320 2026-06-28 22:11:53,088 webull.core.http.initializer.token.token_manager INFO save_token_to_local writing token to file completed.
+8583000320 2026-06-28 22:11:53,089 webull.core.http.initializer.token.token_manager INFO init_token finished. token:cf15e1******f4a950 expires:1783955818565 status:NORMAL

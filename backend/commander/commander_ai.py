@@ -1,96 +1,72 @@
-from data.data_cache_ai import DataCacheAI
-from strategy.strategy_ai import StrategyAI
-from options.options_ai import OptionsAI
-from position.position_ai import PositionAI
-from portfolio.portfolio_ai import PortfolioAI
-from learning.learning_ai import LearningAI
+from consensus.consensus_ai import ConsensusAI
 
 
 class CommanderAI:
+
     def __init__(self):
-        self.cache = DataCacheAI()
-        self.strategy = StrategyAI()
-        self.options = OptionsAI()
-        self.position = PositionAI()
-        self.portfolio = PortfolioAI()
-        self.learning = LearningAI()
+        self.consensus = ConsensusAI()
 
-    def command(self):
-        cached = self.cache.snapshot()
+    def command(self, report):
 
-        market = cached["market"]
-        risk = cached["risk"]
+        result = self.consensus.calculate(report)
 
         return {
-            "market": market,
-            "risk": risk,
-            "strategy": self.strategy.analyze(),
-            "options": self.options.analyze(),
-            "position": self.position.analyze(),
-            "portfolio": self.portfolio.analyze(risk),
-            "learning": self.learning.learn(),
+            "decision": result["decision"],
+            "score": result["score"],
+            "grade": result["grade"],
+            "confidence": result["confidence"],
+            "breakdown": result["breakdown"],
         }
-
-    def vote(self, report):
-        buy = 0
-        sell = 0
-        wait = 0
-
-        for value in report.values():
-            if not isinstance(value, dict):
-                continue
-
-            decision = (
-                value.get("decision")
-                or value.get("recommendation")
-                or value.get("status")
-                or ""
-            )
-
-            decision = str(decision).upper()
-
-            if "BUY" in decision or "CALL" in decision or "APPROVED" in decision:
-                buy += 1
-            elif "SELL" in decision or "PUT" in decision:
-                sell += 1
-            else:
-                wait += 1
-
-        return {
-            "buy": buy,
-            "sell": sell,
-            "wait": wait,
-        }
-
-    def final_decision(self, votes):
-        if votes["buy"] > votes["sell"] and votes["buy"] > votes["wait"]:
-            return "BUY"
-
-        if votes["sell"] > votes["buy"] and votes["sell"] > votes["wait"]:
-            return "SELL"
-
-        return "WAIT"
 
 
 if __name__ == "__main__":
-    ai = CommanderAI()
 
-    report = ai.command()
-    votes = ai.vote(report)
-    decision = ai.final_decision(votes)
+    sample = {
 
-    print("\n======================================")
-    print("      STRATPILOT COMMANDER AI")
-    print("======================================")
+        "market": {
+            "recommendation": "BUY"
+        },
 
-    print(f"BUY Votes  : {votes['buy']}")
-    print(f"SELL Votes : {votes['sell']}")
-    print(f"WAIT Votes : {votes['wait']}")
+        "risk": {
+            "status": "SAFE"
+        },
 
-    print("--------------------------------------")
-    print("FINAL DECISION")
-    print("--------------------------------------")
-    print(decision)
+        "strategy": {
+            "confidence": 0.82
+        },
 
-    print("======================================")
-    print("Think First. Trade Second.")
+        "options": {
+            "decision": "BUY"
+        },
+
+        "position": {
+            "decision": "ALLOW"
+        },
+
+        "portfolio": {
+            "status": "HEALTHY"
+        }
+
+    }
+
+    commander = CommanderAI()
+
+    result = commander.command(sample)
+
+    print("\n==============================")
+    print(" STRATPILOT COMMANDER AI")
+    print("==============================")
+
+    print(f"Decision   : {result['decision']}")
+    print(f"Score      : {result['score']}")
+    print(f"Grade      : {result['grade']}")
+    print(f"Confidence : {result['confidence']}")
+
+    print("\nConsensus Breakdown")
+
+    for name, pts in result["breakdown"].items():
+        print(f"{name:<12}: {pts}")
+
+    print("\nThink First. Trade Second.")
+          
+       
