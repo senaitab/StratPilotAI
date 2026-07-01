@@ -16,7 +16,7 @@ class CommanderAI:
         regime = self.regime.detect(market)
         weights = self.weights.get(regime)
 
-        result = self.consensus.calculate(report)
+        result = self.consensus.calculate(report, weights)
 
         return {
             "regime": regime,
@@ -64,12 +64,12 @@ if __name__ == "__main__":
     print("------------------------------")
     print(result["regime"])
 
-    print("\nDynamic Weights")
+    print("\nActive Dynamic Weights")
     print("------------------------------")
     for name, weight in result["weights"].items():
         print(f"{name:<12}: {weight}")
 
-    print("\nConsensus")
+    print("\nAdaptive Consensus")
     print("------------------------------")
     print(f"Decision   : {result['decision']}")
     print(f"Score      : {result['score']}")
@@ -82,5 +82,6 @@ if __name__ == "__main__":
         print(f"{name:<12}: {pts}")
 
     print("\nThink First. Trade Second.")
+    
           
        
