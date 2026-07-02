@@ -1,6 +1,8 @@
 from consensus.consensus_ai import ConsensusAI
 from regime.regime_ai import RegimeAI
 from consensus.weights import DynamicWeights
+from confidence.confidence_ai import ConfidenceAI
+from execution.execution_ai import ExecutionAI
 
 
 class CommanderAI:
@@ -9,23 +11,43 @@ class CommanderAI:
         self.consensus = ConsensusAI()
         self.regime = RegimeAI()
         self.weights = DynamicWeights()
+        self.confidence = ConfidenceAI()
+        self.execution = ExecutionAI()
 
     def command(self, report):
         market = report.get("market", {})
+        risk = report.get("risk", {})
+        strategy = report.get("strategy", {})
+        position = report.get("position", {})
+        portfolio = report.get("portfolio", {})
 
         regime = self.regime.detect(market)
         weights = self.weights.get(regime)
 
-        result = self.consensus.calculate(report, weights)
+        consensus = self.consensus.calculate(report, weights)
+
+        confidence = self.confidence.calculate({
+            "score": consensus["score"],
+            "regime": regime,
+            "risk_status": risk.get("status", "SAFE"),
+            "strategy_confidence": strategy.get("confidence", 0),
+        })
+
+        execution = self.execution.execute({
+            "decision": consensus["decision"],
+            "confidence": confidence["confidence"],
+            "risk_status": risk.get("status", "SAFE"),
+            "position_status": position.get("status", "APPROVED"),
+            "portfolio_status": portfolio.get("status", "HEALTHY"),
+            "regime": regime,
+        })
 
         return {
             "regime": regime,
             "weights": weights,
-            "decision": result["decision"],
-            "score": result["score"],
-            "grade": result["grade"],
-            "confidence": result["confidence"],
-            "breakdown": result["breakdown"],
+            "consensus": consensus,
+            "confidence": confidence,
+            "execution": execution,
         }
 
 
@@ -47,6 +69,7 @@ if __name__ == "__main__":
         },
         "position": {
             "decision": "ALLOW",
+            "status": "APPROVED",
         },
         "portfolio": {
             "status": "HEALTHY",
@@ -54,34 +77,24 @@ if __name__ == "__main__":
     }
 
     commander = CommanderAI()
-    result = commander.command(sample)
+    report = commander.command(sample)
 
     print("\n==============================")
     print(" STRATPILOT COMMANDER AI")
     print("==============================")
 
-    print("\nMarket Regime")
-    print("------------------------------")
-    print(result["regime"])
+    print(f"Regime      : {report['regime']}")
+    print(f"Decision    : {report['consensus']['decision']}")
+    print(f"Score       : {report['consensus']['score']}")
+    print(f"Grade       : {report['consensus']['grade']}")
+    print(f"Confidence  : {report['confidence']['confidence']}")
+    print(f"Level       : {report['confidence']['level']}")
+    print(f"Execution   : {report['execution']['status']}")
+    print(f"Approved    : {report['execution']['approved']}")
 
-    print("\nActive Dynamic Weights")
+    print("\nExecution Reasons")
     print("------------------------------")
-    for name, weight in result["weights"].items():
-        print(f"{name:<12}: {weight}")
-
-    print("\nAdaptive Consensus")
-    print("------------------------------")
-    print(f"Decision   : {result['decision']}")
-    print(f"Score      : {result['score']}")
-    print(f"Grade      : {result['grade']}")
-    print(f"Confidence : {result['confidence']}")
-
-    print("\nConsensus Breakdown")
-    print("------------------------------")
-    for name, pts in result["breakdown"].items():
-        print(f"{name:<12}: {pts}")
+    for reason in report["execution"]["reasons"]:
+        print("-", reason)
 
     print("\nThink First. Trade Second.")
-    
-          
-       

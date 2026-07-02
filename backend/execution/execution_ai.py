@@ -1,48 +1,52 @@
-from ai.commander_ai import CommanderAI
+from execution.execution_gate import ExecutionGate
 
 
 class ExecutionAI:
+
     def __init__(self):
-        self.commander = CommanderAI()
+        self.gate = ExecutionGate()
 
-    def execute(self):
-        report = self.commander.analyze()
+    def execute(self, report):
+        gate = self.gate.evaluate(report)
 
-        if report["decision"] != "TRADE APPROVED":
+        if not gate["execute"]:
             return {
-                "status": "NOT READY",
-                "reason": "CommanderAI rejected trade.",
-                "report": report,
+                "status": "WAIT",
+                "approved": False,
+                "confidence": report.get("confidence", 0),
+                "reasons": gate["reasons"],
             }
 
         return {
-            "status": "READY",
-            "ticker": report.get("ticker", "SPY"),
-            "direction": report.get("contract", "CALL"),
-            "contracts": report.get("contracts", 1),
-            "limit_price": report.get("price", 0.00),
-            "reason": "All AI systems approved.",
+            "status": "EXECUTE",
+            "approved": True,
+            "confidence": report.get("confidence", 0),
+            "reasons": gate["reasons"],
         }
 
 
 if __name__ == "__main__":
+
+    report = {
+        "decision": "BUY",
+        "confidence": 91.5,
+        "risk_status": "SAFE",
+        "position_status": "APPROVED",
+        "portfolio_status": "HEALTHY",
+        "regime": "BULL",
+    }
+
     ai = ExecutionAI()
 
-    result = ai.execute()
+    result = ai.execute(report)
 
-    print("\n===================================")
-    print("      STRATPILOT EXECUTION AI")
-    print("===================================")
+    print("\n==============================")
+    print(" STRATPILOT EXECUTION AI")
+    print("==============================")
+    print(f"Status     : {result['status']}")
+    print(f"Approved   : {result['approved']}")
+    print(f"Confidence : {result['confidence']}")
+    print()
 
-    print(f"Status : {result['status']}")
-
-    if result["status"] == "READY":
-        print(f"Ticker      : {result['ticker']}")
-        print(f"Direction   : {result['direction']}")
-        print(f"Contracts   : {result['contracts']}")
-        print(f"Limit Price : ${result['limit_price']}")
-    else:
-        print(f"Reason : {result['reason']}")
-
-    print("===================================")
-    print("Think First. Trade Second.")
+    for reason in result["reasons"]:
+        print("-", reason)
