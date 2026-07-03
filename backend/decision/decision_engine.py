@@ -38,7 +38,6 @@ class DecisionEngine:
         }
 
         commander_report = self.commander.command(sample_report)
-
         best_contract = contracts["recommended"]
 
         reasons = []
@@ -55,10 +54,7 @@ class DecisionEngine:
         if best_contract["rating"] != "APPROVED":
             reasons.append("Best contract not approved.")
 
-        if reasons:
-            final_decision = "WAIT"
-        else:
-            final_decision = "BUY"
+        final_decision = "WAIT" if reasons else "BUY"
 
         return {
             "final_decision": final_decision,
@@ -70,10 +66,12 @@ class DecisionEngine:
 
 
 if __name__ == "__main__":
+
     engine = DecisionEngine()
     report = engine.decide()
 
     contract = report["best_contract"]["contract"]
+    commander = report["commander"]
 
     print("\n==============================")
     print(" STRATPILOT DECISION ENGINE")
@@ -81,12 +79,12 @@ if __name__ == "__main__":
 
     print(f"Final Decision : {report['final_decision']}")
     print(f"Market Status  : {report['market']['market_status']}")
-    print(f"Regime         : {report['commander']['regime']}")
-    print(f"Consensus      : {report['commander']['consensus']['decision']}")
-    print(f"Score          : {report['commander']['consensus']['score']}")
-    print(f"Confidence     : {report['commander']['confidence']['confidence']}")
-    print(f"Level          : {report['commander']['confidence']['level']}")
-    print(f"Execution      : {report['commander']['execution']['status']}")
+    print(f"Regime         : {commander['regime']}")
+    print(f"Consensus      : {commander['consensus']['decision']}")
+    print(f"Score          : {commander['consensus']['score']}")
+    print(f"Confidence     : {commander['confidence']['confidence']}")
+    print(f"Level          : {commander['confidence']['level']}")
+    print(f"Execution      : {commander['execution']['status']}")
 
     print("\nBest Contract")
     print("------------------------------")
@@ -96,6 +94,7 @@ if __name__ == "__main__":
 
     print("\nReasons")
     print("------------------------------")
+
     if report["reasons"]:
         for reason in report["reasons"]:
             print("-", reason)
