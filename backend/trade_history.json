@@ -1,0 +1,15 @@
+[
+    {
+        "timestamp": "2026-07-04T18:42:02.423073",
+        "symbol": "SPY",
+        "expiration": "2026-07-02",
+        "strike": 731,
+        "type": "CALL",
+        "entry_price": 5.8,
+        "contracts": 1,
+        "confidence": 86.96,
+        "trade_grade": "A",
+        "decision": "BUY",
+        "status": "OPEN"
+    }
+]
