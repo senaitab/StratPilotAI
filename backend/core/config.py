@@ -2,7 +2,10 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
+# Find the project root
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# Load environment variables from .env
 load_dotenv(BASE_DIR / ".env")
 
 
@@ -17,4 +20,10 @@ class Settings:
     WEBULL_ACCOUNT_ID = os.getenv("WEBULL_ACCOUNT_ID")
 
 
-settings = Settings()
+settings = Settings()	
+
+
+
+
+
+
