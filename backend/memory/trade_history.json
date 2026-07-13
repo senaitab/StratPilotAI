@@ -1,0 +1,11 @@
+[
+    {
+        "symbol": "SPY",
+        "strategy": "SPY-CALL-A",
+        "decision": "BUY",
+        "confidence": 91.4,
+        "profit_loss": 152.35,
+        "result": "WIN",
+        "recorded_at": "2026-07-13T13:05:26.294848"
+    }
+]
