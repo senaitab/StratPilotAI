@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+from typing import Optional
+
+from intelligence.state import IntelligenceState
 
 
 @dataclass
@@ -8,26 +11,38 @@ class TrendAnalysis:
 
 
 class TrendAnalyzer:
+    """
+    Evaluates market trend and writes the result into the shared
+    IntelligenceState object.
 
-    def analyze(self) -> TrendAnalysis:
+    Live price calculations will replace the placeholder values later.
+    """
 
-        # Placeholder implementation.
-        # Later this will use real market data.
+    def analyze(
+        self,
+        state: Optional[IntelligenceState] = None,
+    ):
+        trend = "TRENDING"
+        strength = 92
 
-        return TrendAnalysis(
-            trend="TRENDING",
-            strength=92
-        )
+        # Standalone mode preserves the original analyzer interface.
+        if state is None:
+            return TrendAnalysis(
+                trend=trend,
+                strength=strength,
+            )
+
+        # Shared-state pipeline mode.
+        state.trend_score = strength
+        return state
 
 
 if __name__ == "__main__":
-
     analyzer = TrendAnalyzer()
-
     result = analyzer.analyze()
 
     print("\n==============================")
-    print(" STRATPILOT TREND ANALYZER")
+    print("STRATPILOT TREND ANALYZER")
     print("==============================")
 
     print(f"Trend    : {result.trend}")

@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Optional
 from zoneinfo import ZoneInfo
+
+from intelligence.state import IntelligenceState
 
 
 @dataclass
@@ -14,89 +17,110 @@ class SessionAnalysis:
 
 
 class SessionAnalyzer:
+    """
+    Determines the current U.S. market session in Eastern Time.
 
-    def analyze(self) -> SessionAnalysis:
+    It can return a standalone SessionAnalysis object or update the
+    shared IntelligenceState used by the master pipeline.
+    """
 
+    def analyze(
+        self,
+        state: Optional[IntelligenceState] = None,
+        current_time: Optional[datetime] = None,
+    ):
         eastern = ZoneInfo("America/New_York")
 
-        now = datetime.now(eastern)
+        if current_time is None:
+            now = datetime.now(eastern)
+        elif current_time.tzinfo is None:
+            now = current_time.replace(tzinfo=eastern)
+        else:
+            now = current_time.astimezone(eastern)
 
-        current = now.hour * 60 + now.minute
+        current_minutes = now.hour * 60 + now.minute
 
-        if current < 570:          # Before 9:30
-            return SessionAnalysis(
-                "PRE_MARKET",
-                40,
-                "LOW",
-                "LOW",
-                "MEDIUM",
-                "WAIT"
+        if current_minutes < 570:
+            result = SessionAnalysis(
+                session="PRE_MARKET",
+                confidence=40,
+                volume="LOW",
+                momentum="LOW",
+                risk="MEDIUM",
+                recommendation="WAIT",
             )
 
-        elif current < 630:        # 9:30–10:30
-            return SessionAnalysis(
-                "OPENING_DRIVE",
-                98,
-                "VERY HIGH",
-                "VERY HIGH",
-                "HIGH",
-                "TRADE"
+        elif current_minutes < 630:
+            result = SessionAnalysis(
+                session="OPENING_DRIVE",
+                confidence=98,
+                volume="VERY HIGH",
+                momentum="VERY HIGH",
+                risk="HIGH",
+                recommendation="TRADE",
             )
 
-        elif current < 690:        # 10:30–11:30
-            return SessionAnalysis(
-                "MID_MORNING",
-                92,
-                "HIGH",
-                "HIGH",
-                "MEDIUM",
-                "TRADE"
+        elif current_minutes < 690:
+            result = SessionAnalysis(
+                session="MID_MORNING",
+                confidence=92,
+                volume="HIGH",
+                momentum="HIGH",
+                risk="MEDIUM",
+                recommendation="TRADE",
             )
 
-        elif current < 810:        # 11:30–1:30
-            return SessionAnalysis(
-                "LUNCH",
-                55,
-                "LOW",
-                "LOW",
-                "LOW",
-                "CAUTION"
+        elif current_minutes < 810:
+            result = SessionAnalysis(
+                session="LUNCH",
+                confidence=55,
+                volume="LOW",
+                momentum="LOW",
+                risk="LOW",
+                recommendation="CAUTION",
             )
 
-        elif current < 900:        # 1:30–3:00
-            return SessionAnalysis(
-                "AFTERNOON",
-                82,
-                "MEDIUM",
-                "MEDIUM",
-                "MEDIUM",
-                "TRADE"
+        elif current_minutes < 900:
+            result = SessionAnalysis(
+                session="AFTERNOON",
+                confidence=82,
+                volume="MEDIUM",
+                momentum="MEDIUM",
+                risk="MEDIUM",
+                recommendation="TRADE",
             )
 
-        elif current < 960:        # 3:00–4:00
-            return SessionAnalysis(
-                "POWER_HOUR",
-                96,
-                "VERY HIGH",
-                "HIGH",
-                "HIGH",
-                "TRADE"
+        elif current_minutes < 960:
+            result = SessionAnalysis(
+                session="POWER_HOUR",
+                confidence=96,
+                volume="VERY HIGH",
+                momentum="HIGH",
+                risk="HIGH",
+                recommendation="TRADE",
             )
 
-        return SessionAnalysis(
-            "AFTER_HOURS",
-            25,
-            "LOW",
-            "LOW",
-            "LOW",
-            "WAIT"
-        )
+        else:
+            result = SessionAnalysis(
+                session="AFTER_HOURS",
+                confidence=25,
+                volume="LOW",
+                momentum="LOW",
+                risk="LOW",
+                recommendation="WAIT",
+            )
+
+        # Standalone mode.
+        if state is None:
+            return result
+
+        # Shared-state pipeline mode.
+        state.session_score = result.confidence
+        return state
 
 
 if __name__ == "__main__":
-
     analyzer = SessionAnalyzer()
-
     result = analyzer.analyze()
 
     print("\n==============================")
