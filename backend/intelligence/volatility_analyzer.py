@@ -1,72 +1,160 @@
 from dataclasses import dataclass
-from typing import Optional
 
-from intelligence.state import IntelligenceState
+from intelligence.market_data_provider import MarketData, MarketDataProvider
 
 
 @dataclass
 class VolatilityAnalysis:
-    level: str
-    atr_score: int
-    vix_score: int
-    overall: str
+    score: int
+    status: str
+    intraday_range: float
+    range_percent: float
+    gap_percent: float
+    explanation: str
 
 
 class VolatilityAnalyzer:
     """
-    Evaluates volatility and writes the resulting score into the shared
-    IntelligenceState object.
+    Stage 30.2
 
-    ATR and VIX placeholder values will be replaced by live data later.
+    Calculates a volatility score from the shared MarketData object.
+
+    This version uses:
+    - Intraday high-to-low range
+    - Intraday range as a percentage of price
+    - Gap from previous close to current price
+
+    Later stages can add ATR, VIX, historical volatility,
+    implied volatility, and candle-based calculations.
     """
 
-    def analyze(
-        self,
-        state: Optional[IntelligenceState] = None,
-    ):
-        atr_score = 81
-        vix_score = 76
+    def analyze(self, market: MarketData) -> VolatilityAnalysis:
+        self._validate_market_data(market)
 
-        average_score = round((atr_score + vix_score) / 2)
+        intraday_range = market.high - market.low
 
-        if average_score >= 86:
-            level = "EXTREME"
-            overall = "AVOID"
-        elif average_score >= 61:
-            level = "HIGH"
-            overall = "CAUTION"
-        elif average_score >= 26:
-            level = "NORMAL"
-            overall = "GOOD"
+        range_percent = (
+            intraday_range / market.price
+        ) * 100
+
+        gap_percent = (
+            abs(market.price - market.previous_close)
+            / market.previous_close
+        ) * 100
+
+        score = 30
+
+        # Intraday range contribution
+        if range_percent >= 2.00:
+            score += 45
+        elif range_percent >= 1.25:
+            score += 35
+        elif range_percent >= 0.75:
+            score += 25
+        elif range_percent >= 0.35:
+            score += 15
         else:
-            level = "LOW"
-            overall = "QUIET"
+            score += 5
 
-        # Standalone mode.
-        if state is None:
-            return VolatilityAnalysis(
-                level=level,
-                atr_score=atr_score,
-                vix_score=vix_score,
-                overall=overall,
+        # Gap contribution
+        if gap_percent >= 1.50:
+            score += 25
+        elif gap_percent >= 1.00:
+            score += 20
+        elif gap_percent >= 0.50:
+            score += 15
+        elif gap_percent >= 0.20:
+            score += 10
+        else:
+            score += 5
+
+        score = min(score, 100)
+
+        if score >= 90:
+            status = "EXTREME"
+        elif score >= 75:
+            status = "HIGH"
+        elif score >= 50:
+            status = "NORMAL"
+        else:
+            status = "LOW"
+
+        explanation = (
+            f"Intraday range is ${intraday_range:.2f} "
+            f"({range_percent:.2f}% of price). "
+            f"Current price is {gap_percent:.2f}% away "
+            f"from the previous close."
+        )
+
+        return VolatilityAnalysis(
+            score=score,
+            status=status,
+            intraday_range=intraday_range,
+            range_percent=range_percent,
+            gap_percent=gap_percent,
+            explanation=explanation,
+        )
+
+    @staticmethod
+    def _validate_market_data(market: MarketData) -> None:
+        if market.price <= 0:
+            raise ValueError("Market price must be greater than zero.")
+
+        if market.previous_close <= 0:
+            raise ValueError(
+                "Previous close must be greater than zero."
             )
 
-        # Shared-state pipeline mode.
-        state.volatility_score = average_score
-        return state
+        if market.high < market.low:
+            raise ValueError(
+                "Market high cannot be lower than market low."
+            )
+
+        if not (
+            market.low <= market.price <= market.high
+        ):
+            raise ValueError(
+                "Current price must be between the market low and high."
+            )
 
 
 if __name__ == "__main__":
+    provider = MarketDataProvider()
+    market = provider.get_market_data("SPY")
+
     analyzer = VolatilityAnalyzer()
-    result = analyzer.analyze()
+    result = analyzer.analyze(market)
 
     print("\n================================")
     print("STRATPILOT VOLATILITY ANALYZER")
     print("================================")
 
-    print(f"Volatility : {result.level}")
-    print(f"ATR Score  : {result.atr_score}/100")
-    print(f"VIX Score  : {result.vix_score}/100")
-    print(f"\nOverall    : {result.overall}")
+    print(f"Symbol           : {market.symbol}")
+    print(f"Price            : ${market.price:.2f}")
+    print(f"High             : ${market.high:.2f}")
+    print(f"Low              : ${market.low:.2f}")
+    print(
+        f"Previous Close   : "
+        f"${market.previous_close:.2f}"
+    )
+
+    print(
+        f"\nIntraday Range   : "
+        f"${result.intraday_range:.2f}"
+    )
+    print(
+        f"Range Percent    : "
+        f"{result.range_percent:.2f}%"
+    )
+    print(
+        f"Gap Percent      : "
+        f"{result.gap_percent:.2f}%"
+    )
+
+    print(f"\nVolatility Score : {result.score}/100")
+    print(f"Status           : {result.status}")
+
+    print("\nExplanation")
+    print(result.explanation)
 
     print("\nThink First. Trade Second.")
