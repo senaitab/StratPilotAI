@@ -1,17 +1,10 @@
+from intelligence.state import IntelligenceState
+
+
 class MasterPipeline:
 
     def __init__(self):
-        self.modules = [
-            "Market Context",
-            "Trend Analyzer",
-            "Volatility Analyzer",
-            "Liquidity Analyzer",
-            "Session Analyzer",
-            "Market Confidence",
-            "Risk Engine",
-            "Decision Engine",
-            "Explain Engine",
-        ]
+        self.state = IntelligenceState()
 
     def run(self):
 
@@ -19,11 +12,30 @@ class MasterPipeline:
         print(" STRATPILOT MASTER PIPELINE ")
         print("====================================")
 
-        for i, module in enumerate(self.modules, start=1):
-            print(f"[{i}/9] {module:<24} ✓")
+        print("Initializing shared intelligence state... ✓")
+
+        # Temporary values (next stages will come from real analyzers)
+        self.state.market_context = 100
+        self.state.trend_score = 92
+        self.state.volatility_score = 81
+        self.state.liquidity_score = 94
+        self.state.session_score = 80
+        self.state.confidence_score = 78
+        self.state.risk_level = "MEDIUM"
+        self.state.decision = "WATCH"
+        self.state.grade = "B"
+        self.state.recommendation = "NO TRADE"
+        self.state.explanation = (
+            "Strong trend, excellent liquidity, "
+            "acceptable volatility."
+        )
+
+        print("\nShared Intelligence State\n")
+        print(self.state)
 
         print("\nPipeline Status : COMPLETE")
         print("AI Status       : READY")
+
         print("\nThink First. Trade Second.")
 
 
