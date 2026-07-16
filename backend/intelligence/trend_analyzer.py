@@ -1,51 +1,55 @@
-from dataclasses import dataclass
-from typing import Optional
-
-from intelligence.state import IntelligenceState
-
-
-@dataclass
-class TrendAnalysis:
-    trend: str
-    strength: int
+from intelligence.market_data_provider import MarketData
 
 
 class TrendAnalyzer:
     """
-    Evaluates market trend and writes the result into the shared
-    IntelligenceState object.
+    Stage 30.1
 
-    Live price calculations will replace the placeholder values later.
+    Trend analysis using MarketData.
+    Placeholder logic for now.
     """
 
-    def analyze(
-        self,
-        state: Optional[IntelligenceState] = None,
-    ):
-        trend = "TRENDING"
-        strength = 92
+    def analyze(self, market: MarketData) -> int:
 
-        # Standalone mode preserves the original analyzer interface.
-        if state is None:
-            return TrendAnalysis(
-                trend=trend,
-                strength=strength,
-            )
+        score = 50
 
-        # Shared-state pipeline mode.
-        state.trend_score = strength
-        return state
+        if market.price > market.open_price:
+            score += 20
+
+        if market.price > market.previous_close:
+            score += 20
+
+        if market.high > market.open_price:
+            score += 10
+
+        return min(score, 100)
 
 
 if __name__ == "__main__":
+
+    from intelligence.market_data_provider import MarketDataProvider
+
+    provider = MarketDataProvider()
+
+    market = provider.get_market_data()
+
     analyzer = TrendAnalyzer()
-    result = analyzer.analyze()
+
+    score = analyzer.analyze(market)
 
     print("\n==============================")
-    print("STRATPILOT TREND ANALYZER")
+    print(" STRATPILOT TREND ANALYZER")
     print("==============================")
 
-    print(f"Trend    : {result.trend}")
-    print(f"Strength : {result.strength}/100")
+    print(f"Price : {market.price}")
+    print(f"Open  : {market.open_price}")
+    print(f"Trend Score : {score}/100")
+
+    if score >= 80:
+        print("Trend : STRONG")
+    elif score >= 60:
+        print("Trend : MODERATE")
+    else:
+        print("Trend : WEAK")
 
     print("\nThink First. Trade Second.")
