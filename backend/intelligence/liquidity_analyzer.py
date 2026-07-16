@@ -1,72 +1,119 @@
 from dataclasses import dataclass
-from typing import Optional
 
-from intelligence.state import IntelligenceState
+from intelligence.market_data_provider import MarketData, MarketDataProvider
 
 
 @dataclass
 class LiquidityAnalysis:
-    level: str
-    volume_score: int
-    spread_score: int
-    overall: str
+    score: int
+    status: str
+    volume: int
+    dollar_volume: float
+    explanation: str
 
 
 class LiquidityAnalyzer:
     """
-    Evaluates market liquidity and writes the resulting score into the
-    shared IntelligenceState object.
+    Stage 30.3
 
-    Volume and spread placeholders will be replaced with live data later.
+    Calculates a liquidity score from the shared MarketData object.
+
+    This version uses:
+    - Current trading volume
+    - Estimated dollar volume
+
+    Later stages can add:
+    - Bid/ask spread
+    - Average daily volume
+    - Relative volume
+    - Open interest
+    - Order-book depth
     """
 
-    def analyze(
-        self,
-        state: Optional[IntelligenceState] = None,
-    ):
-        volume_score = 94
-        spread_score = 91
+    def analyze(self, market: MarketData) -> LiquidityAnalysis:
+        self._validate_market_data(market)
 
-        average_score = round((volume_score + spread_score) / 2)
+        dollar_volume = market.price * market.volume
 
-        if average_score >= 86:
-            level = "EXCELLENT"
-            overall = "TRADE"
-        elif average_score >= 61:
-            level = "GOOD"
-            overall = "FAVORABLE"
-        elif average_score >= 26:
-            level = "FAIR"
-            overall = "CAUTION"
+        score = 20
+
+        # Volume contribution
+        if market.volume >= 150_000_000:
+            score += 50
+        elif market.volume >= 100_000_000:
+            score += 40
+        elif market.volume >= 50_000_000:
+            score += 30
+        elif market.volume >= 20_000_000:
+            score += 20
         else:
-            level = "POOR"
-            overall = "AVOID"
+            score += 10
 
-        # Standalone mode.
-        if state is None:
-            return LiquidityAnalysis(
-                level=level,
-                volume_score=volume_score,
-                spread_score=spread_score,
-                overall=overall,
-            )
+        # Dollar-volume contribution
+        if dollar_volume >= 100_000_000_000:
+            score += 30
+        elif dollar_volume >= 50_000_000_000:
+            score += 25
+        elif dollar_volume >= 20_000_000_000:
+            score += 20
+        elif dollar_volume >= 5_000_000_000:
+            score += 15
+        else:
+            score += 5
 
-        # Shared-state pipeline mode.
-        state.liquidity_score = average_score
-        return state
+        score = min(score, 100)
+
+        if score >= 90:
+            status = "EXCELLENT"
+        elif score >= 75:
+            status = "GOOD"
+        elif score >= 50:
+            status = "FAIR"
+        else:
+            status = "POOR"
+
+        explanation = (
+            f"Volume is {market.volume:,} shares with estimated "
+            f"dollar volume of ${dollar_volume:,.2f}."
+        )
+
+        return LiquidityAnalysis(
+            score=score,
+            status=status,
+            volume=market.volume,
+            dollar_volume=dollar_volume,
+            explanation=explanation,
+        )
+
+    @staticmethod
+    def _validate_market_data(market: MarketData) -> None:
+        if market.price <= 0:
+            raise ValueError("Market price must be greater than zero.")
+
+        if market.volume < 0:
+            raise ValueError("Market volume cannot be negative.")
 
 
 if __name__ == "__main__":
+    provider = MarketDataProvider()
+    market = provider.get_market_data("SPY")
+
     analyzer = LiquidityAnalyzer()
-    result = analyzer.analyze()
+    result = analyzer.analyze(market)
 
-    print("\n==============================")
+    print("\n================================")
     print("STRATPILOT LIQUIDITY ANALYZER")
-    print("==============================")
+    print("================================")
 
-    print(f"Liquidity : {result.level}")
-    print(f"Volume    : {result.volume_score}/100")
-    print(f"Spread    : {result.spread_score}/100")
-    print(f"\nOverall   : {result.overall}")
+    print(f"Symbol           : {market.symbol}")
+    print(f"Price            : ${market.price:.2f}")
+    print(f"Volume           : {result.volume:,}")
+    print(f"Dollar Volume    : ${result.dollar_volume:,.2f}")
+
+    print(f"\nLiquidity Score  : {result.score}/100")
+    print(f"Status           : {result.status}")
+
+    print("\nExplanation")
+    print(result.explanation)
 
     print("\nThink First. Trade Second.")
