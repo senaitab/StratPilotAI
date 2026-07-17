@@ -20,7 +20,7 @@ class MarketData:
 
     volume: int
 
-    timestamp: str
+    timestamp: datetime
 
 
 class MarketDataProvider:
@@ -51,7 +51,7 @@ class MarketDataProvider:
             low=732.95,
             previous_close=731.44,
             volume=185_000_000,
-            timestamp=now.strftime("%Y-%m-%d %H:%M:%S"),
+            timestamp=now,
         )
 
 

@@ -1,137 +1,108 @@
 from dataclasses import dataclass
-from datetime import datetime
-from typing import Optional
-from zoneinfo import ZoneInfo
+from datetime import time
 
-from intelligence.state import IntelligenceState
+from intelligence.market_data_provider import (
+    MarketData,
+    MarketDataProvider,
+)
 
 
 @dataclass
 class SessionAnalysis:
+    score: int
     session: str
-    confidence: int
-    volume: str
-    momentum: str
-    risk: str
-    recommendation: str
+    confidence: str
+    explanation: str
 
 
 class SessionAnalyzer:
     """
-    Determines the current U.S. market session in Eastern Time.
+    Stage 30.4
 
-    It can return a standalone SessionAnalysis object or update the
-    shared IntelligenceState used by the master pipeline.
+    Determines trading session characteristics
+    from the shared MarketData timestamp.
+
+    Future versions will support:
+    - Exchange holidays
+    - Half trading days
+    - Futures sessions
+    - International exchanges
     """
 
-    def analyze(
-        self,
-        state: Optional[IntelligenceState] = None,
-        current_time: Optional[datetime] = None,
-    ):
-        eastern = ZoneInfo("America/New_York")
+    def analyze(self, market: MarketData) -> SessionAnalysis:
 
-        if current_time is None:
-            now = datetime.now(eastern)
-        elif current_time.tzinfo is None:
-            now = current_time.replace(tzinfo=eastern)
-        else:
-            now = current_time.astimezone(eastern)
+        current = market.timestamp.time()
 
-        current_minutes = now.hour * 60 + now.minute
+        score = 50
 
-        if current_minutes < 570:
-            result = SessionAnalysis(
-                session="PRE_MARKET",
-                confidence=40,
-                volume="LOW",
-                momentum="LOW",
-                risk="MEDIUM",
-                recommendation="WAIT",
-            )
+        if time(9, 30) <= current < time(10, 30):
+            session = "OPENING HOUR"
+            score = 95
 
-        elif current_minutes < 630:
-            result = SessionAnalysis(
-                session="OPENING_DRIVE",
-                confidence=98,
-                volume="VERY HIGH",
-                momentum="VERY HIGH",
-                risk="HIGH",
-                recommendation="TRADE",
-            )
+        elif time(10, 30) <= current < time(14, 0):
+            session = "MIDDAY"
+            score = 75
 
-        elif current_minutes < 690:
-            result = SessionAnalysis(
-                session="MID_MORNING",
-                confidence=92,
-                volume="HIGH",
-                momentum="HIGH",
-                risk="MEDIUM",
-                recommendation="TRADE",
-            )
+        elif time(14, 0) <= current < time(15, 30):
+            session = "AFTERNOON"
+            score = 85
 
-        elif current_minutes < 810:
-            result = SessionAnalysis(
-                session="LUNCH",
-                confidence=55,
-                volume="LOW",
-                momentum="LOW",
-                risk="LOW",
-                recommendation="CAUTION",
-            )
+        elif time(15, 30) <= current <= time(16, 0):
+            session = "POWER HOUR"
+            score = 100
 
-        elif current_minutes < 900:
-            result = SessionAnalysis(
-                session="AFTERNOON",
-                confidence=82,
-                volume="MEDIUM",
-                momentum="MEDIUM",
-                risk="MEDIUM",
-                recommendation="TRADE",
-            )
-
-        elif current_minutes < 960:
-            result = SessionAnalysis(
-                session="POWER_HOUR",
-                confidence=96,
-                volume="VERY HIGH",
-                momentum="HIGH",
-                risk="HIGH",
-                recommendation="TRADE",
-            )
+        elif current < time(9, 30):
+            session = "PRE-MARKET"
+            score = 55
 
         else:
-            result = SessionAnalysis(
-                session="AFTER_HOURS",
-                confidence=25,
-                volume="LOW",
-                momentum="LOW",
-                risk="LOW",
-                recommendation="WAIT",
-            )
+            session = "AFTER HOURS"
+            score = 45
 
-        # Standalone mode.
-        if state is None:
-            return result
+        if score >= 90:
+            confidence = "VERY HIGH"
+        elif score >= 75:
+            confidence = "HIGH"
+        elif score >= 60:
+            confidence = "MEDIUM"
+        else:
+            confidence = "LOW"
 
-        # Shared-state pipeline mode.
-        state.session_score = result.confidence
-        return state
+        explanation = (
+            f"Current session is {session}. "
+            f"Session score is {score}/100."
+        )
+
+        return SessionAnalysis(
+            score=score,
+            session=session,
+            confidence=confidence,
+            explanation=explanation,
+        )
 
 
 if __name__ == "__main__":
+
+    provider = MarketDataProvider()
+
+    market = provider.get_market_data("SPY")
+
     analyzer = SessionAnalyzer()
-    result = analyzer.analyze()
 
-    print("\n==============================")
+    result = analyzer.analyze(market)
+
+    print("\n================================")
     print("STRATPILOT SESSION ANALYZER")
-    print("==============================")
+    print("================================")
 
-    print(f"Session        : {result.session}")
-    print(f"Confidence     : {result.confidence}/100")
-    print(f"Volume         : {result.volume}")
-    print(f"Momentum       : {result.momentum}")
-    print(f"Risk           : {result.risk}")
-    print(f"\nRecommendation : {result.recommendation}")
+    print(f"Symbol        : {market.symbol}")
+    print(f"Timestamp     : {market.timestamp}")
+
+    print(f"\nSession       : {result.session}")
+    print(f"Score         : {result.score}/100")
+    print(f"Confidence    : {result.confidence}")
+
+    print("\nExplanation")
+    print(result.explanation)
 
     print("\nThink First. Trade Second.")
