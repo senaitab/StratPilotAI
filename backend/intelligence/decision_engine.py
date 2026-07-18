@@ -1,72 +1,164 @@
 from dataclasses import dataclass
+from typing import Literal
 
 
-@dataclass
+DecisionAction = Literal[
+    "BUY_CALL",
+    "BUY_PUT",
+    "WAIT",
+    "NO_TRADE",
+]
+
+
+@dataclass(frozen=True)
 class DecisionResult:
-    score: int
-    grade: str
-    confidence: str
-    action: str
-    reason: str
+    action: DecisionAction
+    confidence: int
+    setup_grade: str
+    risk_level: str
+    explanation: str
+
+
+@dataclass(frozen=True)
+class DemoConfluenceResult:
+    trade_bias: str
+    setup_grade: str
+    confidence: int
 
 
 class DecisionEngine:
+    """
+    Stage 32.0
 
-    def evaluate(self, confidence_score: int) -> DecisionResult:
+    Converts market confluence into a trading decision.
 
-        if confidence_score >= 95:
+    This engine DOES NOT execute trades.
+
+    It only determines what StratPilot recommends.
+    """
+
+    BUY_CONFIDENCE = 70
+
+    def analyze(
+        self,
+        confluence: DemoConfluenceResult,
+    ) -> DecisionResult:
+
+        bias = confluence.trade_bias.upper()
+
+        grade = confluence.setup_grade.upper()
+
+        confidence = confluence.confidence
+
+        # ----------------------------
+        # BUY CALL
+        # ----------------------------
+
+        if (
+            bias == "BULLISH"
+            and grade in ("A", "A+")
+            and confidence >= self.BUY_CONFIDENCE
+        ):
+
             return DecisionResult(
-                95,
-                "A+",
-                "VERY HIGH",
-                "BUY",
-                "Institutional-quality setup."
+                action="BUY_CALL",
+                confidence=confidence,
+                setup_grade=grade,
+                risk_level="LOW",
+                explanation=(
+                    "Bullish confluence satisfied all "
+                    "Decision Engine requirements."
+                ),
             )
 
-        elif confidence_score >= 85:
+        # ----------------------------
+        # BUY PUT
+        # ----------------------------
+
+        if (
+            bias == "BEARISH"
+            and grade in ("A", "A+")
+            and confidence >= self.BUY_CONFIDENCE
+        ):
+
             return DecisionResult(
-                confidence_score,
-                "A",
-                "HIGH",
-                "BUY",
-                "Strong setup approved."
+                action="BUY_PUT",
+                confidence=confidence,
+                setup_grade=grade,
+                risk_level="LOW",
+                explanation=(
+                    "Bearish confluence satisfied all "
+                    "Decision Engine requirements."
+                ),
             )
 
-        elif confidence_score >= 75:
+        # ----------------------------
+        # WAIT
+        # ----------------------------
+
+        if (
+            bias != "NEUTRAL"
+            and confidence >= 50
+        ):
+
             return DecisionResult(
-                confidence_score,
-                "B",
-                "MEDIUM",
-                "WATCH",
-                "Conditions are acceptable, but not ideal."
+                action="WAIT",
+                confidence=confidence,
+                setup_grade=grade,
+                risk_level="MEDIUM",
+                explanation=(
+                    "Directional bias exists, but the "
+                    "overall evidence is not yet strong "
+                    "enough to justify entering a trade."
+                ),
             )
 
-        else:
-            return DecisionResult(
-                confidence_score,
-                "C",
-                "LOW",
-                "WAIT",
-                "Market conditions are not favorable."
-            )
+        # ----------------------------
+        # NO TRADE
+        # ----------------------------
+
+        return DecisionResult(
+            action="NO_TRADE",
+            confidence=confidence,
+            setup_grade=grade,
+            risk_level="HIGH",
+            explanation=(
+                "Insufficient confluence. "
+                "The best decision is patience."
+            ),
+        )
 
 
-if __name__ == "__main__":
+def main():
+
+    confluence = DemoConfluenceResult(
+        trade_bias="BULLISH",
+        setup_grade="A+",
+        confidence=80,
+    )
 
     engine = DecisionEngine()
 
-    result = engine.evaluate(78)
+    result = engine.analyze(confluence)
 
-    print("\n===================================")
+    print("\n====================================")
     print("STRATPILOT DECISION ENGINE")
-    print("===================================")
+    print("====================================")
 
-    print(f"Decision Score : {result.score}")
-    print(f"Grade          : {result.grade}")
-    print(f"Confidence     : {result.confidence}")
-    print(f"Action         : {result.action}")
+    print(f" Decision     : {result.action}")
 
-    print("\nReason")
-    print(result.reason)
+    print(f" Risk Level   : {result.risk_level}")
 
-    print("\nThink First. Trade Second.")
+    print(f" Confidence   : {result.confidence}/100")
+
+    print(f" Setup Grade  : {result.setup_grade}")
+
+    print("\n Explanation")
+
+    print(f" {result.explanation}")
+
+    print("\n Think First. Trade Second.")
+
+
+if __name__ == "__main__":
+    main()
