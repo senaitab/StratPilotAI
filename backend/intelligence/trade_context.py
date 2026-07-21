@@ -25,9 +25,14 @@ class TradeContext:
     trade_allowed: bool = False
     risk_explanation: str = ""
 
-    # Account and sizing fields for later stages
+    # Position Sizer output
     account_balance: float = 10000.0
+    base_risk_percent: float = 0.0
+    effective_risk_percent: float = 0.0
+    risk_amount: float = 0.0
+    risk_per_contract: float = 0.0
     contracts: int = 0
+    position_explanation: str = ""
 
     # Pipeline tracking
     completed_modules: List[str] = field(default_factory=list)
