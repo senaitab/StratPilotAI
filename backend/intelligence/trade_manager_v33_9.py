@@ -2,10 +2,6 @@ from dataclasses import dataclass
 from time import perf_counter
 from typing import Optional
 
-from intelligence.contract_selector import (
-    ContractSelector,
-    OptionContract,
-)
 from intelligence.decision_engine import (
     DecisionEngine,
     DemoConfluenceResult,
@@ -24,21 +20,19 @@ class IntegrationResult:
 
 class TradeManager:
     """
-    Stage 34.0
+    Stage 33.9
 
     Real integration of:
     1. Decision Engine
     2. Risk Manager
     3. Position Sizer
-    4. Contract Selector
-    5. Shared TradeContext
+    4. Shared TradeContext
     """
 
     def __init__(self) -> None:
         self.decision_engine = DecisionEngine()
         self.risk_manager = RiskManager()
         self.position_sizer = PositionSizer()
-        self.contract_selector = ContractSelector()
 
     def run(
         self,
@@ -48,6 +42,7 @@ class TradeManager:
         base_risk_percent: float = 1.0,
         risk_per_contract: float = 25.0,
     ) -> IntegrationResult:
+
         started_at = perf_counter()
 
         context = TradeContext(
@@ -161,6 +156,7 @@ class TradeManager:
                 failed_module="Position Sizer",
             )
 
+        # Position-sizing safety gate
         if context.contracts <= 0:
             context.add_error(
                 "Position Sizer returned zero or fewer contracts."
@@ -172,98 +168,7 @@ class TradeManager:
                 failed_module="Position Sizer",
             )
 
-        # ==========================================
-        # 4. CONTRACT SELECTOR
-        # ==========================================
-
-        try:
-            option_type = (
-                "CALL"
-                if context.direction == "BUY_CALL"
-                else "PUT"
-            )
-
-            contract_candidates = [
-                OptionContract(
-                    symbol=context.symbol,
-                    option_type=option_type,
-                    strike=648,
-                    expiration="2026-07-24",
-                    delta=0.35,
-                    bid=2.10,
-                    ask=2.25,
-                    volume=450,
-                    open_interest=1200,
-                ),
-                OptionContract(
-                    symbol=context.symbol,
-                    option_type=option_type,
-                    strike=649,
-                    expiration="2026-07-24",
-                    delta=0.52,
-                    bid=3.00,
-                    ask=3.06,
-                    volume=1800,
-                    open_interest=4200,
-                ),
-                OptionContract(
-                    symbol=context.symbol,
-                    option_type=option_type,
-                    strike=650,
-                    expiration="2026-07-24",
-                    delta=0.41,
-                    bid=2.55,
-                    ask=2.63,
-                    volume=950,
-                    open_interest=2600,
-                ),
-            ]
-
-            selection = self.contract_selector.analyze(
-                contract_candidates
-            )
-
-            selected = selection.contract
-
-            if selected is None:
-                raise ValueError(
-                    "Contract Selector returned no contract."
-                )
-
-            context.selected_symbol = selected.symbol
-            context.selected_option_type = selected.option_type
-            context.selected_strike = selected.strike
-            context.selected_expiration = selected.expiration
-            context.selected_delta = selected.delta
-            context.liquidity_score = selection.liquidity_score
-            context.overall_score = selection.overall_score
-            context.contract_explanation = selection.explanation
-
-            context.mark_complete("Contract Selector")
-
-        except Exception as exc:
-            context.add_error(
-                f"Contract Selector failed: {exc}"
-            )
-
-            return IntegrationResult(
-                context=context,
-                runtime_seconds=perf_counter() - started_at,
-                failed_module="Contract Selector",
-            )
-
-        if not context.selected_symbol:
-            context.add_error(
-                "Contract Selector did not select a valid contract."
-            )
-
-            return IntegrationResult(
-                context=context,
-                runtime_seconds=perf_counter() - started_at,
-                failed_module="Contract Selector",
-            )
-
-        context.trade_status = "READY_FOR_TRADE_PLANNING"
+        context.trade_status = "READY_FOR_CONTRACT_SELECTION"
 
         return IntegrationResult(
             context=context,
@@ -276,10 +181,11 @@ def print_summary(result: IntegrationResult) -> None:
 
     print("\n====================================")
     print("STRATPILOT TRADE MANAGER")
-    print("STAGE 34.0 - CONTRACT SELECTOR")
+    print("STAGE 33.9 - POSITION SIZER")
     print("====================================")
 
     print("\nDECISION ENGINE")
+
     print(f"Action             : {context.direction}")
     print(f"Setup Grade        : {context.setup_grade}")
     print(f"Confidence         : {context.confidence}/100")
@@ -289,6 +195,7 @@ def print_summary(result: IntegrationResult) -> None:
     )
 
     print("\nRISK MANAGER")
+
     print(
         f"Risk Level         : "
         f"{context.risk_level or 'NOT RUN'}"
@@ -303,6 +210,7 @@ def print_summary(result: IntegrationResult) -> None:
     )
 
     print("\nPOSITION SIZER")
+
     print(
         f"Account Balance    : "
         f"${context.account_balance:,.2f}"
@@ -326,38 +234,6 @@ def print_summary(result: IntegrationResult) -> None:
     print(
         f"Contracts          : "
         f"{context.contracts}"
-    )
-
-    print("\nCONTRACT SELECTOR")
-
-    if context.selected_symbol:
-        selected_contract = (
-            f"{context.selected_symbol} "
-            f"{context.selected_strike:g} "
-            f"{context.selected_option_type}"
-        )
-    else:
-        selected_contract = "NOT SELECTED"
-
-    print(
-        f"Selected Contract  : "
-        f"{selected_contract}"
-    )
-    print(
-        f"Expiration         : "
-        f"{context.selected_expiration or 'N/A'}"
-    )
-    print(
-        f"Delta              : "
-        f"{context.selected_delta:.2f}"
-    )
-    print(
-        f"Liquidity Score    : "
-        f"{context.liquidity_score}/100"
-    )
-    print(
-        f"Overall Score      : "
-        f"{context.overall_score}/100"
     )
 
     print("\nPIPELINE")
@@ -389,9 +265,7 @@ def print_summary(result: IntegrationResult) -> None:
 
     print("\nEXPLANATION")
 
-    if context.contract_explanation:
-        print(context.contract_explanation)
-    elif context.position_explanation:
+    if context.position_explanation:
         print(context.position_explanation)
     elif context.risk_explanation:
         print(context.risk_explanation)

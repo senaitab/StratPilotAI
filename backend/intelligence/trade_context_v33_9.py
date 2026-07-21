@@ -34,16 +34,6 @@ class TradeContext:
     contracts: int = 0
     position_explanation: str = ""
 
-    # Contract Selector output
-    selected_symbol: str = ""
-    selected_option_type: str = ""
-    selected_strike: float = 0.0
-    selected_expiration: str = ""
-    selected_delta: float = 0.0
-    liquidity_score: int = 0
-    overall_score: int = 0
-    contract_explanation: str = ""
-
     # Pipeline tracking
     completed_modules: List[str] = field(default_factory=list)
     errors: List[str] = field(default_factory=list)
