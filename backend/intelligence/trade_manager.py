@@ -13,6 +13,13 @@ from intelligence.decision_engine import (
 from intelligence.position_sizer import PositionSizer
 from intelligence.risk_manager import RiskManager
 from intelligence.trade_context import TradeContext
+from intelligence.trade_planner import (
+    ContractSelectionResult as PlannerContractSelectionResult,
+    DecisionResult as PlannerDecisionResult,
+    PositionSizeResult as PlannerPositionSizeResult,
+    RiskResult as PlannerRiskResult,
+    TradePlanner,
+)
 
 
 @dataclass(frozen=True)
@@ -39,6 +46,7 @@ class TradeManager:
         self.risk_manager = RiskManager()
         self.position_sizer = PositionSizer()
         self.contract_selector = ContractSelector()
+        self.trade_planner = TradePlanner()
 
     def run(
         self,
@@ -263,7 +271,68 @@ class TradeManager:
                 failed_module="Contract Selector",
             )
 
-        context.trade_status = "READY_FOR_TRADE_PLANNING"
+        # ==========================================
+        # 5. TRADE PLANNER
+        # ==========================================
+
+        try:
+            planner_decision = PlannerDecisionResult(
+                action=context.direction,
+                confidence=context.confidence,
+                setup_grade=context.setup_grade,
+            )
+
+            planner_risk = PlannerRiskResult(
+                risk_level=context.risk_level,
+                risk_multiplier=context.risk_multiplier,
+            )
+
+            planner_position = PlannerPositionSizeResult(
+                contracts=context.contracts,
+                risk_amount=context.risk_amount,
+            )
+
+            planner_contract = PlannerContractSelectionResult(
+                symbol=selected.symbol,
+                option_type=selected.option_type,
+                strike=float(selected.strike),
+                expiration=selected.expiration,
+                bid=selected.bid,
+                ask=selected.ask,
+            )
+
+            plan = self.trade_planner.analyze(
+                decision=planner_decision,
+                risk=planner_risk,
+                position=planner_position,
+                contract=planner_contract,
+            )
+
+            context.trade_plan = plan
+            context.trade_status = plan.status
+            context.mark_complete("Trade Planner")
+
+        except Exception as exc:
+            context.add_error(
+                f"Trade Planner failed: {exc}"
+            )
+
+            return IntegrationResult(
+                context=context,
+                runtime_seconds=perf_counter() - started_at,
+                failed_module="Trade Planner",
+            )
+
+        if context.trade_plan is None:
+            context.add_error(
+                "Trade Planner did not create a valid trade plan."
+            )
+
+            return IntegrationResult(
+                context=context,
+                runtime_seconds=perf_counter() - started_at,
+                failed_module="Trade Planner",
+            )
 
         return IntegrationResult(
             context=context,
@@ -273,10 +342,11 @@ class TradeManager:
 
 def print_summary(result: IntegrationResult) -> None:
     context = result.context
+    plan = context.trade_plan
 
     print("\n====================================")
     print("STRATPILOT TRADE MANAGER")
-    print("STAGE 34.0 - CONTRACT SELECTOR")
+    print("STAGE 34.1B - TRADE PLANNER")
     print("====================================")
 
     print("\nDECISION ENGINE")
@@ -360,6 +430,26 @@ def print_summary(result: IntegrationResult) -> None:
         f"{context.overall_score}/100"
     )
 
+    print("\nTRADE PLANNER")
+
+    if plan is not None:
+        print(f"Contract           : {plan.contract}")
+        print(f"Expiration         : {plan.expiration}")
+        print(f"Contracts          : {plan.contracts}")
+        print(f"Entry              : ${plan.entry_price:.2f}")
+        print(f"Limit              : ${plan.limit_price:.2f}")
+        print(f"Stop Loss          : ${plan.stop_loss:.2f}")
+        print(f"Target 1           : ${plan.target_1:.2f}")
+        print(f"Target 2           : ${plan.target_2:.2f}")
+        print(f"Target 3           : ${plan.target_3:.2f}")
+        print(
+            f"Risk/Reward        : "
+            f"1:{plan.risk_reward_ratio:.2f}"
+        )
+        print(f"Plan Status        : {plan.status}")
+    else:
+        print("Trade Plan         : NOT CREATED")
+
     print("\nPIPELINE")
 
     completed = (
@@ -389,7 +479,9 @@ def print_summary(result: IntegrationResult) -> None:
 
     print("\nEXPLANATION")
 
-    if context.contract_explanation:
+    if plan is not None:
+        print(plan.explanation)
+    elif context.contract_explanation:
         print(context.contract_explanation)
     elif context.position_explanation:
         print(context.position_explanation)
