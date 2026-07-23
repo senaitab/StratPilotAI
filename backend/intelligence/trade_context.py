@@ -1,5 +1,8 @@
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from intelligence.trade_planner import TradePlan
 
 
 @dataclass
@@ -43,7 +46,8 @@ class TradeContext:
     liquidity_score: int = 0
     overall_score: int = 0
     contract_explanation: str = ""
-
+    # Trade Planner output
+    trade_plan: Optional["TradePlan"] = None
     # Pipeline tracking
     completed_modules: List[str] = field(default_factory=list)
     errors: List[str] = field(default_factory=list)
